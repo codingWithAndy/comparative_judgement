@@ -24,6 +24,7 @@ LONG_DESCRIPTION = long_description=open('README.md').read(),
 
 # Setting up
 setup(
+<<<<<<< Updated upstream
     name="comparative_judgement",
     version=VERSION,
     author="Andy Gray",
@@ -46,3 +47,18 @@ setup(
         "Operating System :: Microsoft :: Windows",
     ]
 )
+=======
+    name = 'comparative_judgement',
+    version = '0.0.1',
+    packages = find_packages(),
+    install_requires = [
+        'numpy',
+        'scipy',
+        'matplotlib',
+    ],
+    author = 'Andy Gray',
+    description = 'A package for conducting Comparative Judgement',
+    long_description = open('README.md').read(),
+    long_description_content_type = 'text/markdown',
+)
+>>>>>>> Stashed changes

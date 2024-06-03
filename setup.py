@@ -1,13 +1,14 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='my_package',
+    name='comparative_judgement',
     version='0.0.1',
     packages=find_packages(),
     install_requires=[
         'numpy',
         'scipy',
         'matplotlib',
+        'ray',
     ],
     author='Andy Gray',
     description='A package for conducting Comparative Judgement',

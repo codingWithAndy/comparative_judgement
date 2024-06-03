@@ -16,37 +16,33 @@ from setuptools import setup, find_packages
 #     long_description_content_type='text/markdown',
 # )
 
-VERSION = "0.0.1"  # PEP-440
+from setuptools import setup, find_packages
 
-NAME = "comparative_judgement"
+VERSION = '0.0.1'
+DESCRIPTION = 'A package for conducting Comparative Judgement'
+LONG_DESCRIPTION = long_description=open('README.md').read(),
 
-INSTALL_REQUIRES = [
-    "pandas",
-    "numpy",
-    "ray",
-    "scipy",
-]
-
-
+# Setting up
 setup(
-    name=NAME,
+    name="vidstream",
     version=VERSION,
-    description="A package for conducting Comparative Judgement",
-    url="https://github.com/codingWithAndy/comparative_judgement",
-    project_urls={
-        "Source Code": "https://github.com/codingWithAndy/comparative_judgement",
-    },
     author="Andy Gray",
-    author_email="",
-    license="",
-    classifiers=[
-        "Programming Language :: Python :: 3.10",
-    ],
-    # Snowpark requires Python 3.8
-    python_requires=">=3.8",
-    # Requirements
-    install_requires=INSTALL_REQUIRES,
-    packages=["comparative_judgement"],
-    long_description=open("README.md").read(),
+    description=DESCRIPTION,
     long_description_content_type="text/markdown",
+    long_description=long_description,
+    packages=find_packages(),
+    install_requires=[
+        'numpy',
+        'scipy',
+        'matplotlib',
+        'ray',],
+    keywords=['python', 'comparative', 'judgement', 'Bayesian', 'BTM'],
+    classifiers=[
+        "Development Status :: 1 - Planning",
+        "Intended Audience :: Developers",
+        "Programming Language :: Python :: 3",
+        "Operating System :: Unix",
+        "Operating System :: MacOS :: MacOS X",
+        "Operating System :: Microsoft :: Windows",
+    ]
 )

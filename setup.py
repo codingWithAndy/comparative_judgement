@@ -24,12 +24,12 @@ LONG_DESCRIPTION = long_description=open('README.md').read(),
 
 # Setting up
 setup(
-    name="vidstream",
+    name="comparative_judgement",
     version=VERSION,
     author="Andy Gray",
     description=DESCRIPTION,
     long_description_content_type="text/markdown",
-    long_description=long_description,
+    long_description=LONG_DESCRIPTION,
     packages=find_packages(),
     install_requires=[
         'numpy',

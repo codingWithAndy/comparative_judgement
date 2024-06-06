@@ -1,56 +1,13 @@
 import numpy as np
+from scipy.optimize import minimize
 
 class BTMCJ:
-
     def __init__(self, n_items):
         self.n_items = n_items
 
-    def check(self):
-        print("BTMCJ")
-
-    def update_p(
-        self, 
-        m: np.ndarray, 
-        i: int, 
-        p: np.ndarray
-    ):
-        """Updates the estimated parameters of p
-
-        Args:
-            m (np.ndarray): _description_
-            i (int): _description_
-            p (np.ndarray): _description_
-
-        Returns:
-            _type_: Updated p parameters before geometric mean normalisation.
-        """
-        part_1 = []
-        part_2 = []
-
-        for j in range(m.shape[1]):
-            if m[i, j] != -1:
-                part_1.append(m[i, j] * (p[j] / (p[i] + p[j])))
-                part_2.append(m[j, i] * (1 / (p[i] + p[j])))
-        
-        part_3 = np.sum(part_1) / np.sum(part_2)
-
-        return part_3
-
-
-    def run(
-        self, 
-        X: list, # maybe change to np.ndarray?
-            #, result_output="single"
-    ):
-        """Runs the BTMCJ algorithm, fitting the 
-        parameters to the pairwise comparison data results.
-
-        Args:
-            X (list): Inputted data following a n by 3 format (a, b, winner).
-        """
-
+    def run(self, X):
         number_of_rounds = len(X)
-        m = np.asarray([[0 if i!=j else -1 
+        self.m = np.asarray([[0 if i!=j else -1 
               for j in range(self.n_items)] 
                 for i in range(self.n_items)])
 
@@ -60,37 +17,50 @@ class BTMCJ:
             winner = X[_][2]
 
             if winner == a:
-                m[a][b] += 1
+                self.m[a][b] += 1
             elif winner == b:
-                m[b][a] += 1
-
-        try:
-            p = np.asarray([1.0] * self.n_items)
-
-            for _ in range(10_000):
-                p_previous = p.copy()
-                for i in range(len(p)):
-                    p[i] = self.update_p(m, i, p)
-
-                normalising_p = pow(np.prod(p), 1/len(p))
-                p = np.asarray(p) / normalising_p
-
-                if np.all(np.abs(p - p_previous) < 1e-6):
-                    self.converge = f"Converged! on round: {_}"
-                    break
-
-                # self.p_scaled = [k * 100 for k in p]
-                self.final_rank = np.argsort(-np.array(p))
-            
-        except Exception as e:
-            print(f"Error: {str(e)}")
+                self.m[b][a] += 1
         
-        self.p = p
+        # Sample results matrix
+        results = self.m
+        items = list(range(self.n_items))
 
+        # Create pairwise comparison data from results matrix
+        comparisons = []
+        for i in range(self.n_items):
+            for j in range(self.n_items):
+                if results[i, j] > 0:
+                    comparisons.extend([(i, j)] * results[i, j])
 
-    def get_ranking(self):
-        """Prints the final ranking of the items.
-        """
-        print("BTMCJ ranking:")
-        for i in range(len(self.final_rank)):
-            print(f"{i+1}: Item {self.final_rank[i]} - score: {self.p[self.final_rank[i]]}")
+        def bradley_terry_log_likelihood(params):
+            # Convert params to strengths
+            strengths = np.exp(params)  # Use exponential to ensure positive strengths
+            log_likelihood = 0
+            
+            for winner, loser in comparisons:
+                # Probability of winner beating loser
+                prob = strengths[winner] / (strengths[winner] + strengths[loser])
+                
+                # Update log likelihood
+                log_likelihood += np.log(prob)
+                
+            return -log_likelihood  # Return negative log likelihood for minimization
+
+        # Initial parameters (log strengths)
+        self.initial_params = np.zeros(self.n_items)
+
+        # Optimize to find the best strengths
+        self.result = minimize(bradley_terry_log_likelihood, self.initial_params, method='BFGS')
+
+        # Get the optimized strengths
+        self.optimal_params = self.result.x
+        self.strengths = np.exp(self.optimal_params)
+
+        # Map strengths back to items
+        self.item_strengths = {item: strength for item, strength in zip(items, self.strengths)}
+
+        self.rank = np.argsort(-self.optimal_params)
+
+        # print("Item strengths:")
+        # for item, strength in item_strengths.items():
+        #     print(f"Item {item}: {strength:.4f}")

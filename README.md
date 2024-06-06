@@ -3,6 +3,7 @@
 A package for comparative judgement (CJ).
 
 
+## Bayesian CJ
 Importing the BCJ model:
 
 ```python
@@ -60,6 +61,8 @@ BCJ.res
 >>> array([3, 1, 0, 2])
 ```
 
+
+## Traditional BTM CJ
 Importing the BTM Model:
 
 ```python

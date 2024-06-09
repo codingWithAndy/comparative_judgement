@@ -1,6 +1,46 @@
+<!-- .. -*- mode: rst -*-
+
+|PyPi|
+
+.. |PyPi| image:: https://img.shields.io/pypi/v/comparative_judgement
+   :target: https://pypi.org/project/comparative-judgement/ -->
+
 # Comparative Judgement
 
 A package for comparative judgement (CJ).
+
+
+Installation
+------------
+
+Dependencies
+<!-- ~~~~~~~~~~~~ -->
+
+comparative-judgement requires:
+
+- Python (>= |PythonMinVersion|)
+- NumPy (>= |NumPyMinVersion|)
+- SciPy (>= |SciPyMinVersion|)
+- Ray
+<!-- ~~~~~~~~~~~~ -->
+
+User installation
+<!-- ~~~~~~~~~~~~ -->
+
+If you already have a working installation of NumPy and SciPy,
+the easiest way to install scikit-learn is using ``pip``::
+
+```bash
+    pip install comparative-judgement
+```
+```conda
+    conda install -c conda-forge comparative-judgement
+```
+<!-- ~~~~~~~~~~~~ -->
+
+<!-- The documentation includes more detailed `installation instructions <https://scikit-learn.org/stable/install.html>`_. -->
+
+
 
 
 ## Bayesian CJ

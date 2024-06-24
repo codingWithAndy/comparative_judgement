@@ -1,10 +1,3 @@
-<!-- .. -*- mode: rst -*-
-
-|PyPi|
-
-.. |PyPi| image:: https://img.shields.io/pypi/v/comparative_judgement
-   :target: https://pypi.org/project/comparative-judgement/ -->
-
 # Comparative Judgement
 
 A package for comparative judgement (CJ).

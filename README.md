@@ -21,7 +21,7 @@ User installation
 
 
 If you already have a working installation of NumPy and SciPy,
-the easiest way to install scikit-learn is using ``pip``::
+the easiest way to install comparative_judgement is using ``pip``::
 
 ```bash
     pip install comparative-judgement

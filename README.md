@@ -35,7 +35,7 @@ the easiest way to install comparative_judgement is using ``pip``::
 Importing the BCJ model:
 
 ```python
-from cj.models import BayesianCJ
+from cj.models import BTMCJ
 
 BCJ = BayesianCJ(4)
 ```

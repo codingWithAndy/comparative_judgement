@@ -14,7 +14,7 @@ Installation
 ------------
 
 Dependencies
-<!-- ~~~~~~~~~~~~ -->
+
 
 comparative-judgement requires:
 
@@ -22,10 +22,10 @@ comparative-judgement requires:
 - NumPy (>= |NumPyMinVersion|)
 - SciPy (>= |SciPyMinVersion|)
 - Ray
-<!-- ~~~~~~~~~~~~ -->
+
 
 User installation
-<!-- ~~~~~~~~~~~~ -->
+
 
 If you already have a working installation of NumPy and SciPy,
 the easiest way to install scikit-learn is using ``pip``::
@@ -36,11 +36,6 @@ the easiest way to install scikit-learn is using ``pip``::
 ```conda
     conda install -c conda-forge comparative-judgement
 ```
-<!-- ~~~~~~~~~~~~ -->
-
-<!-- The documentation includes more detailed `installation instructions <https://scikit-learn.org/stable/install.html>`_. -->
-
-
 
 
 ## Bayesian CJ

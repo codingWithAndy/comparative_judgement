@@ -37,7 +37,7 @@ Importing the BCJ model:
 ```python
 from cj.models import BTMCJ
 
-BCJ = BayesianCJ(4)
+BCJ = BTMCJ(4)
 ```
 
 Creating the data:

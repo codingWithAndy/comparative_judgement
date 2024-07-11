@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-VERSION = '0.0.3'
+VERSION = '0.0.4'
 DESCRIPTION = 'A package for conducting Comparative Judgement'
 LONG_DESCRIPTION = open('README.md').read()
 

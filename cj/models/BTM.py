@@ -280,5 +280,5 @@ class BradleyTerryModelOG:
                 p = p_prime / p_norm
 
         p_scaled = p * 100
-        self.final_rank = np.argsort(-p_scaled)
+        self.rank = np.argsort(-p_scaled)
         self.p = p

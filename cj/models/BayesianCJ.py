@@ -69,7 +69,7 @@ class BayesianCJ:
 
             if _ == 0:
                 p_matrix = self.create_cdf_matrix(self.comparison_results, 
-                                                  self.n_items) # can this be split into a init set up and then a updater?
+                                                  self.n_items)
             else:
                 p_matrix = self.update_cdf_matrix(self.comparison_results, 
                                                   p_matrix, 
@@ -82,10 +82,10 @@ class BayesianCJ:
         self.prob_dist = find_expected_score.remote(p_matrix,
                                                     self.prob_dist)
         self.prob_dist = ray.get(self.prob_dist)
-        self.rank_scores = [self.expected_value(range(1,self.n_items+1),
+        self.Er_scores = [self.expected_value(range(1,self.n_items+1),
                                                  self.prob_dist[key]) 
                                                     for key in self.prob_dist.keys()]
-        self.res = np.argsort(np.array(self.rank_scores))
+        self.rank = np.argsort(np.array(self.Er_scores))
 
     
     def expected_value(

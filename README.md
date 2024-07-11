@@ -79,13 +79,13 @@ BCJ.run(data)
 
 Finding the $\mathbb{E}[\mathbf{r}]$
 ```python
-BCJ.rank_scores
+BCJ.Er_scores
 >>> [3.046875, 2.09765625, 3.05859375, 1.796875]
 ```
 
 Finding the BCJ rank:
 ```python
-BCJ.res
+BCJ.rank
 >>> array([3, 1, 0, 2])
 ```
 
@@ -114,4 +114,19 @@ find BTM rank:
 ```python
 BTM.rank
 >>> array([3, 1, 2, 0])
+```
+
+---
+
+Citing this Library:
+
+```bib
+@misc{comparative_judgement,
+    author = {Andy Gray},
+    title = {Comparative Judgement},
+    year = {2024},
+    publisher = {Python Package Index (PyPI)},
+    howpublished = {\url{https://pypi.org/project/comparative-judgement/}}
+}
+
 ```

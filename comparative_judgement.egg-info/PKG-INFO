@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: comparative-judgement
-Version: 0.0.3
+Version: 0.0.4
 Summary: A package for conducting Comparative Judgement
 Author: Andy Gray
 Keywords: python,comparative,judgement,Bayesian,BTM
@@ -17,12 +17,41 @@ Description-Content-Type: text/markdown
 A package for comparative judgement (CJ).
 
 
+Installation
+------------
+
+Dependencies
+
+
+comparative-judgement requires:
+
+- Python (>= |PythonMinVersion|)
+- NumPy (>= |NumPyMinVersion|)
+- SciPy (>= |SciPyMinVersion|)
+- Ray
+
+
+User installation
+
+
+If you already have a working installation of NumPy and SciPy,
+the easiest way to install comparative_judgement is using ``pip``::
+
+```bash
+    pip install comparative-judgement
+```
+```conda
+    conda install -c conda-forge comparative-judgement
+```
+
+
+## Bayesian CJ
 Importing the BCJ model:
 
 ```python
-from cj.models import BayesianCJ
+from cj.models import BTMCJ
 
-BCJ = BayesianCJ(4)
+BCJ = BTMCJ(4)
 ```
 
 Creating the data:
@@ -64,16 +93,18 @@ BCJ.run(data)
 
 Finding the $\mathbb{E}[\mathbf{r}]$
 ```python
-BCJ.rank_scores
+BCJ.Er_scores
 >>> [3.046875, 2.09765625, 3.05859375, 1.796875]
 ```
 
 Finding the BCJ rank:
 ```python
-BCJ.res
+BCJ.rank
 >>> array([3, 1, 0, 2])
 ```
 
+
+## Traditional BTM CJ
 Importing the BTM Model:
 
 ```python
@@ -97,4 +128,19 @@ find BTM rank:
 ```python
 BTM.rank
 >>> array([3, 1, 2, 0])
+```
+
+---
+
+Citing this Library:
+
+```bib
+@misc{comparative_judgement,
+    author = {Andy Gray},
+    title = {Comparative Judgement},
+    year = {2024},
+    publisher = {Python Package Index (PyPI)},
+    howpublished = {\url{https://pypi.org/project/comparative-judgement/}}
+}
+
 ```

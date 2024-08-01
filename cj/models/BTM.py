@@ -27,7 +27,7 @@ class BTMCJ:
         for i in range(self.n_items):
             self.scores.append(self.results[i]['theta']) 
         
-        self.final_rank = np.argsort(self.scores)[::-1]
+        self.rank = np.argsort(self.scores)[::-1]
 
         self.ssr = self.calculate_ssr(self.results)
 
@@ -40,11 +40,11 @@ class BTMCJ:
     def uniq_teams(self, dat):
         chosen_teams = [d['chosen'] for d in dat]
         not_chosen_teams = [d['notChosen'] for d in dat]
-        all_teams = list(range(self.n_items))#list(set(chosen_teams + not_chosen_teams))
+        all_teams = list(range(self.n_items))
         return sorted(all_teams)
 
     def team_index(self, teams, col_data):
-        return [teams.index(team) if team in teams else -1 for team in col_data]#[teams.index(team) for team in col_data]
+        return [teams.index(team) if team in teams else -1 for team in col_data]
 
     def calc_scores(self, dat, n_teams):
         scores = [0] * n_teams
@@ -83,7 +83,7 @@ class BTMCJ:
         return max([abs(theta[i] - theta0[i]) for i in range(len(theta))])
 
     def fac(self, M11, M13):
-        return [(M11[i] + M13[i]) / 2 for i in range(len(M11))] #[M11[i] + M13[i] / 2 for i in range(len(M11))]
+        return [(M11[i] + M13[i]) / 2 for i in range(len(M11))]
 
     def group_sum(self, vals, grp, TP):
         out = [0] * TP
@@ -104,7 +104,7 @@ class BTMCJ:
         return [col1[i] * (1 - col1[i] - col2[i] / 2) + col2[i] / 2 * (0.5 - col1[i] - col2[i] / 2) for i in range(len(col1))]
 
     def change_inc(self, incr, maxincr):
-        return [maxincr * self.sign(incr[i]) if abs(incr[i]) > maxincr else incr[i] for i in range(len(incr))] #[maxincr * np.sign(incr[i]) if abs(incr[i]) > maxincr else incr[i] for i in range(len(incr))]
+        return [maxincr * self.sign(incr[i]) if abs(incr[i]) > maxincr else incr[i] for i in range(len(incr))]
     
     def sign(self, val):
         if val > 0:
@@ -132,7 +132,7 @@ class BTMCJ:
         for i in range(n):
             for j in range(n):
                 if matrix[i, j] > matrix[j, i]:
-                    dat.append({'chosen': i, 'notChosen': j}) # dat.append({'chosen': f'Team{i}', 'notChosen': f'Team{j}'})
+                    dat.append({'chosen': i, 'notChosen': j})
         return dat
     
     def calculate_ssr(self, results):
@@ -275,7 +275,7 @@ class BradleyTerryModelOG:
                 if denominator_sum > 0:
                     p_prime[i] = w_sum / denominator_sum
 
-            p_norm = pow(np.prod(p_prime), 1/self.n_items)
+            p_norm = np.sum(p_prime)
             if p_norm > 0:
                 p = p_prime / p_norm
 

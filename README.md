@@ -35,9 +35,9 @@ the easiest way to install comparative_judgement is using ``pip``::
 Importing the BCJ model and initiating a instance of the model with 4 samples:
 
 ```python
-from cj.models import BTMCJ
+from cj.models import BayesianCJ
 
-BCJ = BTMCJ(4)
+BCJ = BayesianCJ(4)
 ```
 
 Creating the data:
@@ -88,6 +88,10 @@ Finding the BCJ rank:
 BCJ.rank
 >>> array([3, 1, 0, 2])
 ```
+
+<!-- ## Multi-Criterion Bayesian CJ
+ -->
+
 
 
 ## Traditional BTM CJ

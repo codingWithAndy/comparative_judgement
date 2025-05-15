@@ -222,3 +222,8 @@ class BayesianCJ:
 class BayesianCJMC:
     def check(self):
         print("BayesianCJMC")
+
+
+class MBayesianCJ:
+    def check(self):
+        print("Multi-Criterion BayesianCJMC")

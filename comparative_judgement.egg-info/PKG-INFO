@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
-Name: comparative-judgement
-Version: 0.0.4
+Name: comparative_judgement
+Version: 0.0.5
 Summary: A package for conducting Comparative Judgement
 Author: Andy Gray
 Keywords: python,comparative,judgement,Bayesian,BTM
@@ -11,6 +11,10 @@ Classifier: Operating System :: Unix
 Classifier: Operating System :: MacOS :: MacOS X
 Classifier: Operating System :: Microsoft :: Windows
 Description-Content-Type: text/markdown
+Requires-Dist: numpy
+Requires-Dist: scipy
+Requires-Dist: matplotlib
+Requires-Dist: ray
 
 # Comparative Judgement
 
@@ -46,12 +50,12 @@ the easiest way to install comparative_judgement is using ``pip``::
 
 
 ## Bayesian CJ
-Importing the BCJ model:
+Importing the BCJ model and initiating a instance of the model with 4 samples:
 
 ```python
-from cj.models import BTMCJ
+from cj.models import BayesianCJ
 
-BCJ = BTMCJ(4)
+BCJ = BayesianCJ(4)
 ```
 
 Creating the data:
@@ -103,12 +107,16 @@ BCJ.rank
 >>> array([3, 1, 0, 2])
 ```
 
+<!-- ## Multi-Criterion Bayesian CJ
+ -->
+
+
 
 ## Traditional BTM CJ
-Importing the BTM Model:
+Importing the BTM Model a instance of the model with 4 samples:
 
 ```python
-from cj.models import BayesianCJ
+from cj.models import BTMCJ
 
 BTM = BTMCJ(4)
 ```

@@ -225,5 +225,13 @@ class BayesianCJMC:
 
 
 class MBayesianCJ:
+    def __init__(self, n_items, weights):
+        self.n_items = n_items
+        self.n_los = len(weights)
+        self.weights = weights
+        self.prob_dist      = {k:{j: [] for j in range(n_items)} for k in range(self.n_los)}
+        self.lo_prob_des    = {k:{j: [] for j in range(n_items)} for k in range(self.n_los)}
+        self.lo_rank_scores = {k:{j: [] for j in range(n_items)} for k in range(self.n_los)}
+
     def check(self):
         print("Multi-Criterion BayesianCJMC")

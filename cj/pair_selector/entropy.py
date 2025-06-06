@@ -1,6 +1,6 @@
 import random
 import numpy as np
-from scipy.stats import beta
+from scipy.stats import beta, norm
 
 class EntropyPairSelector:
     def posterior_conjugate(self, data, n_pts=100):
@@ -60,15 +60,23 @@ class EntropyPairSelector:
         
         return winner
     
-    def __init__(self, scores):
-        self.scores = scores
-        self.sample_size = len(scores)
-        self.results = []
+    def __init__(self, n_items):
+        
+        self.sample_size = n_items
+        # self.results = []
 
-    def entropy_pairs_simulation(
+    def make_distributions(self):
+        dist = {}
+        for i in range(self.sample_size):
+            dist[i] = norm(loc=self.scores[i], scale=self.standard_dev)
+        # distributions = make them
+        return dist
+
+    def run_entropy_pairs_simulation(
         self, 
-        distributions: dict, 
-        items: int, 
+        scores,
+        std_dev,
+        # distributions: dict,
         k = 10
     ):
         """_summary_
@@ -81,53 +89,52 @@ class EntropyPairSelector:
         Returns:
             _type_: _description_
         """
-        results = []
+        self.scores = scores
+        self.standard_dev = std_dev
+        self.results = []
+        self.distributions = self.make_distributions()
         rounds      = 0
         # sample_size = items
-        comparison_results = [[-1 if i >= j else []
-                                for j in range(sample_size)]
-                                  for i in range(sample_size)]
-        entropy_results    = [[-1 if i >= j else []
-                                for j in range(sample_size)]
-                                  for i in range(sample_size)]
-        n_rounds = sample_size * k
+        self.comparison_results = [[-1 if i >= j else []
+                                for j in range(self.sample_size)]
+                                  for i in range(self.sample_size)]
+        self.entropy_results    = [[-1 if i >= j else []
+                                for j in range(self.sample_size)]
+                                  for i in range(self.sample_size)]
+        n_rounds = self.sample_size * k
         items_to_select = []
 
         while rounds < n_rounds:
-            # print(f"round: {rounds+1}")
-            # round_probs = [[-1 if i >= j else [] for j in range(sample_size)] for i in range(sample_size)]
-
-            if len(items_to_select) == 0: # This has been added
-                for i in range(len(comparison_results)):
-                    for j in range(len(comparison_results[i])):
-                        if comparison_results[i][j] != -1:
-                            post, entropy = self.posterior_conjugate(comparison_results[i][j], n_pts=1000)
-                            entropy_results[i][j].append(entropy)
-                
-                highest_entropy = -10000
-                for i in range(len(entropy_results)):
-                    for j in range(len(entropy_results[i])):
-                        if entropy_results[i][j] != -1:
-                            if entropy_results[i][j][-1] > highest_entropy:
-                                items_to_select = [] # This has been added
-                                highest_entropy = entropy_results[i][j][-1]
-                                items_to_select.append([i,j]) # This has been added
-                                # a, b = i, j # This has been removed.
-                            elif entropy_results[i][j][-1] == highest_entropy: # This has been added
-                                items_to_select.append([i,j])
+            items_to_select = []
+            for i in range(len(self.comparison_results)):
+                for j in range(len(self.comparison_results[i])):
+                    if self.comparison_results[i][j] != -1:
+                        post, entropy = self.posterior_conjugate(self.comparison_results[i][j], n_pts=1000)
+                        self.entropy_results[i][j].append(entropy)
+            
+            highest_entropy = -10000
+            for i in range(len(self.entropy_results)):
+                for j in range(len(self.entropy_results[i])):
+                    if self.entropy_results[i][j] != -1:
+                        if self.entropy_results[i][j][-1] > highest_entropy:
+                            items_to_select = []
+                            highest_entropy = self.entropy_results[i][j][-1]
+                            items_to_select.append([i,j]) 
+                        elif self.entropy_results[i][j][-1] == highest_entropy:
+                            items_to_select.append([i,j])
 
             selected_items = random.choice(items_to_select)
             a = selected_items[0]
             b = selected_items[1]
             items_to_select.remove(selected_items)
-            winner = self.generate_winner_dist(a, b, distributions)
-
-            if winner == a:
-                comparison_results[a][b].append(1)
-            elif winner == b:
-                comparison_results[a][b].append(0)
+            winner = self.generate_winner_dist(a, b, self.distributions)
 
             self.results.append([a, b, winner])
+
+            if winner == a:
+                self.comparison_results[a][b].append(1)
+            elif winner == b:
+                self.comparison_results[a][b].append(0)
+
             rounds += 1
         
-        # return results
